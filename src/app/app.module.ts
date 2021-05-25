@@ -9,9 +9,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ClientsComponent } from './components/clients/clients.component';
 import { AddUpdateClientComponent } from './components/add-update-client/add-update-client.component';
+import { BasicDetailsComponent } from './components/add-update-client/basic-details/basic-details.component';
+import { OtherDetailsComponent } from './components/add-update-client/other-details/other-details.component';
 
 @NgModule({
-  declarations: [AppComponent, ClientsComponent, AddUpdateClientComponent],
+  declarations: [
+    AppComponent,
+    ClientsComponent,
+    BasicDetailsComponent,
+    OtherDetailsComponent,
+    AddUpdateClientComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

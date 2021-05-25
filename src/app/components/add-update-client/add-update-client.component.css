@@ -1,0 +1,15 @@
+.grid__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+}
+
+.mat-card {
+  width: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .grid__layout {
+    grid-template-columns: 1fr;
+  }
+}

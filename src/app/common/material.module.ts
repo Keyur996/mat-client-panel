@@ -14,7 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
+import {
+  MatChipsModule,
+  MAT_CHIPS_DEFAULT_OPTIONS,
+} from '@angular/material/chips';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,6 +45,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @NgModule({
   declarations: [],
@@ -92,6 +96,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
     PortalModule,
     ScrollingModule,
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    {
+      provide: MAT_CHIPS_DEFAULT_OPTIONS,
+      useValue: {
+        separatorKeyCodes: [ENTER, COMMA],
+      },
+    },
+  ],
 })
 export class AngularMaterialModule {}

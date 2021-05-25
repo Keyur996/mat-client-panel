@@ -1,1 +1,24 @@
-<p>add-update-client works!</p>
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="mat-h1">Add Client</h1>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<!-- Book form -->
+<div class="inner-wrapper">
+  <form #clientForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Left block -->
+    <mat-card>
+      <div class="controlers-wrapper" class="grid__layout">
+        <app-basic-details [basicDetails]="basic"></app-basic-details>
+        <div>
+          <app-other-details [otherDetails]="other"></app-other-details>
+          <div>
+            <button mat-flat-button color="primary">Submit</button>
+            <button mat-flat-button>Clear</button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>
