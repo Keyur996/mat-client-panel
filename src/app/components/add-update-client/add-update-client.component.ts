@@ -1,25 +1,53 @@
 import { Client } from './../../models/client.model';
-import { OtherDeatils } from './../../models/other-deatils.model';
-import { BasicDetails } from './../../models/basic-deatils.model';
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ControlContainer,
+  FormBuilder,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
+import { ChipsLengthChecker } from 'src/app/common/customValidators/chipslLengthChecker';
 
 @Component({
   selector: 'app-add-update-client',
   templateUrl: './add-update-client.component.html',
   styleUrls: ['./add-update-client.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class AddUpdateClientComponent implements OnInit {
-  basic: BasicDetails = new BasicDetails('', '', '', new Date());
-  other: OtherDeatils = new OtherDeatils('', 'male', []);
-  constructor() {}
+  clientForm!: FormGroup;
+  private client!: Client;
 
-  ngOnInit(): void {}
+  constructor(
+    private _fb: FormBuilder,
+    private readonly changeDetectorRef: ChangeDetectorRef
+  ) {}
 
-  onSubmit() {
-    // console.log(form.value, form.valid);
-    console.log(this.basic, this.other);
-    // const client: Client = new Client(this.basic, this.other);
-    // console.log(client);
+  ngOnInit(): void {
+    this.clientForm = this._fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        birthDay: ['', Validators.required],
+        city: ['', Validators.required],
+        gender: ['male'],
+        hobbies: [[]],
+      },
+      {
+        validators: ChipsLengthChecker('hobbies'),
+      }
+    );
+  }
+
+  onSubmit(form: any) {
+    console.log(form.value, form.valid);
+    this.client = { ...form.value };
+    // console.log(this.client);
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 }

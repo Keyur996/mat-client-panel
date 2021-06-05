@@ -3,22 +3,24 @@
   <h1 class="mat-h1">Add Client</h1>
   <mat-divider fxFlex="1 0"></mat-divider>
 </div>
-
 <!-- Book form -->
 <div class="inner-wrapper">
-  <form #clientForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit(clientForm)" novalidate>
     <!-- Left block -->
     <mat-card>
       <div class="controlers-wrapper" class="grid__layout">
-        <app-basic-details [basicDetails]="basic"></app-basic-details>
+        <app-basic-details [basicDetails]="clientForm"></app-basic-details>
         <div>
-          <app-other-details [otherDetails]="other"></app-other-details>
+          <app-other-details [otherDetails]="clientForm"></app-other-details>
           <div>
             <button mat-flat-button color="primary">Submit</button>
             <button mat-flat-button>Clear</button>
           </div>
         </div>
       </div>
+      <!-- <pre> -->
+      <!-- {{ clientForm.value | json }} -->
+      <!-- </pre> -->
     </mat-card>
   </form>
 </div>

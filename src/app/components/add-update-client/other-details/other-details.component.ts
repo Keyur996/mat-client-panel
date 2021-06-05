@@ -1,7 +1,9 @@
-import { OtherDeatils } from './../../../models/other-deatils.model';
+import { formValidations } from './../form-validations';
 import { Component, Input, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { FormGroup } from '@angular/forms';
+import { handleError } from 'src/app/common/form-handle.class';
 
 @Component({
   selector: 'app-other-details',
@@ -10,11 +12,12 @@ import { MatChipInputEvent } from '@angular/material/chips';
 })
 export class OtherDetailsComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  @Input() otherDetails!: OtherDeatils;
+  @Input() otherDetails!: FormGroup;
+  handleError: Function = handleError;
+  formValidations: any = formValidations;
   hobbies: string[] = [];
   visible: boolean = true;
   selectable: boolean = true;
-  removable: boolean = true;
   addOnBlur: boolean = true;
   constructor() {}
 
@@ -22,21 +25,20 @@ export class OtherDetailsComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-
     // Add our fruit
     if (value) {
-      this.hobbies.push(value);
+      this.otherDetails.get('hobbies')?.value.push(value);
+      this.otherDetails.get('hobbies')?.updateValueAndValidity();
     }
-
     // Clear the input value
     event.chipInput!.clear();
   }
 
   remove(hobby: string): void {
-    const index = this.hobbies.indexOf(hobby);
-
+    const index = this.otherDetails.get('hobbies')?.value.indexOf(hobby);
     if (index >= 0) {
-      this.hobbies.splice(index, 1);
+      this.otherDetails.get('hobbies')?.value.splice(index, 1);
+      this.otherDetails.get('hobbies')?.updateValueAndValidity();
     }
   }
 }

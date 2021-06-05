@@ -1,52 +1,57 @@
-<!-- City -->
-<mat-form-field appearance="outline">
-  <mat-label>City</mat-label>
-  <mat-select [(ngModel)]="otherDetails.city">
-    <mat-option value="bharuch">Bharuch</mat-option>
-    <mat-option value="ahmedabad">Ahmedabad</mat-option>
-    <mat-option value="gandhinagar">Gandhinagar</mat-option>
-  </mat-select>
-  <mat-error> City is required </mat-error>
-</mat-form-field>
+<div [formGroup]="otherDetails">
+  <!-- City -->
+  <mat-form-field appearance="outline">
+    <mat-label>City</mat-label>
+    <mat-select formControlName="city">
+      <mat-option value="bharuch">Bharuch</mat-option>
+      <mat-option value="ahmedabad">Ahmedabad</mat-option>
+      <mat-option value="gandhinagar">Gandhinagar</mat-option>
+    </mat-select>
+    <mat-error *ngFor="let validation of formValidations.city">
+      <mat-error *ngIf="handleError('city', validation.type, otherDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
 
-<!--Gender -->
-<div class="misc-bottom-padding" style="margin-bottom: 30px">
-  <mat-label>Gender</mat-label>
-  <mat-radio-group
-    aria-label="Select an option"
-    [(ngModel)]="otherDetails.gender"
-  >
-    <mat-radio-button value="male">Male</mat-radio-button>
-    <mat-radio-button value="female">Female</mat-radio-button>
-  </mat-radio-group>
-</div>
+  <!--Gender -->
+  <div class="misc-bottom-padding" style="margin-bottom: 30px">
+    <mat-label>Gender</mat-label>
+    <mat-radio-group aria-label="Select an option" formControlName="gender">
+      <mat-radio-button value="male">Male</mat-radio-button>
+      <mat-radio-button value="female">Female</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-<!-- Hobbies -->
-<mat-form-field class="multiple-items" appearance="outline">
-  <mat-label>Hobbies</mat-label>
-  <mat-chip-list #chipList>
-    <mat-chip
-      *ngFor="let hobby of hobbies"
-      [removable]="removable"
-      [selectable]="selectable"
-      [removable]="removable"
-      (removed)="remove(hobby)"
+  <!-- Hobbies -->
+  <mat-form-field class="multiple-items" appearance="outline">
+    <mat-label>Hobbies</mat-label>
+    <mat-chip-list #chipList formControlName="hobbies">
+      <mat-chip
+        *ngFor="let hobby of otherDetails.get('hobbies')?.value"
+        [selectable]="selectable"
+        (removed)="remove(hobby)"
+      >
+        {{ hobby }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <input
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)"
+    />
+    <i
+      class="material-icons tooltip-info"
+      matTooltip="Enter item name and press enter to add multiple items"
     >
-      {{ hobby }}
-      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-    </mat-chip>
-  </mat-chip-list>
-  <input
-    [(ngModel)]="otherDetails.hobbies!"
-    [matChipInputFor]="chipList"
-    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-    [matChipInputAddOnBlur]="addOnBlur"
-    (matChipInputTokenEnd)="add($event)"
-  />
-  <i
-    class="material-icons tooltip-info"
-    matTooltip="Enter item name and press enter to add multiple items"
-  >
-    info
-  </i>
-</mat-form-field>
+      info
+    </i>
+    <mat-error *ngFor="let validation of formValidations.hobbies">
+      <mat-error *ngIf="handleError('hobbies', validation.type, otherDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
+</div>

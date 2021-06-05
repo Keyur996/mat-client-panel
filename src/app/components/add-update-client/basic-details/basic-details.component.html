@@ -1,40 +1,60 @@
-<!-- First Name -->
-<mat-form-field class="example-full-width" appearance="outline">
-  <mat-label>First Name</mat-label>
-  <input
-    [(ngModel)]="basicDetails.firstName"
-    matInput
-    placeholder="First Name"
-  />
-  <mat-error>You must provide a<strong>book name</strong> </mat-error>
-</mat-form-field>
+<div [formGroup]="basicDetails">
+  <!-- First Name -->
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>First Name</mat-label>
+    <input formControlName="firstName" matInput placeholder="First Name" />
+    <mat-error *ngFor="let validation of formValidations.firstName">
+      <mat-error
+        *ngIf="handleError('firstName', validation.type, basicDetails)"
+      >
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
 
-<!-- Last Name -->
-<mat-form-field class="example-full-width" appearance="outline">
-  <mat-label>Last Name</mat-label>
-  <input [(ngModel)]="basicDetails.lastName" matInput placeholder="Last Name" />
-  <mat-error> You must provide a <strong>10 digit ISBN</strong> </mat-error>
-  <mat-error> Only numbers are allowed </mat-error>
-  <mat-error> Your <strong>ISBN</strong> must be 10 digit </mat-error>
-</mat-form-field>
+  <!-- Last Name -->
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Last Name</mat-label>
+    <input formControlName="lastName" matInput placeholder="Last Name" />
+    <mat-error *ngFor="let validation of formValidations.lastName">
+      <mat-error *ngIf="handleError('lastName', validation.type, basicDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
 
-<!-- email -->
-<mat-form-field class="example-full-width" appearance="outline">
-  <mat-label>Email</mat-label>
-  <input [(ngModel)]="basicDetails.email" matInput placeholder="Enter email" />
-  <mat-error> You must provide an <strong>author name</strong> </mat-error>
-</mat-form-field>
+  <!-- email -->
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Email</mat-label>
+    <input
+      formControlName="email"
+      matInput
+      placeholder="Enter email"
+      required
+    />
+    <mat-error *ngFor="let validation of formValidations.email">
+      <mat-error *ngIf="handleError('email', validation.type, basicDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
 
-<!-- Birth Date -->
-<mat-form-field class="example-full-width" appearance="outline">
-  <mat-label>Birth Day</mat-label>
-  <input
-    [(ngModel)]="basicDetails.birthDay"
-    matInput
-    readonly
-    [matDatepicker]="picker"
-  />
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  <mat-error> Publication date is required </mat-error>
-</mat-form-field>
+  <!-- Birth Date -->
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Birth Day</mat-label>
+    <input
+      formControlName="birthDay"
+      matInput
+      readonly
+      [matDatepicker]="picker"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngFor="let validation of formValidations.email">
+      <mat-error *ngIf="handleError('birthDay', validation.type, basicDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
+  </mat-form-field>
+</div>

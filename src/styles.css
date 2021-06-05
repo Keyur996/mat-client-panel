@@ -142,9 +142,6 @@ body .push-right {
   .nav-tool-items {
     margin-right: 0;
   }
-  .hamburger {
-    visibility: visible !important;
-  }
 }
 html,
 body {
