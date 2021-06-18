@@ -2,13 +2,14 @@ import { Client } from './../../models/client.model';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   ControlContainer,
-  FormBuilder,
+  FormControl,
   FormGroup,
   NgForm,
   Validators,
 } from '@angular/forms';
 import { ChipsLengthChecker } from 'src/app/common/customValidators/chipslLengthChecker';
 import { ClientService } from 'src/app/services/client.service';
+import { NotificationService } from 'src/app/common/core-services/notification.service';
 
 @Component({
   selector: 'app-add-update-client',
@@ -18,28 +19,34 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AddUpdateClientComponent implements OnInit {
   clientForm!: FormGroup;
-  private client!: Client;
+  private client: Client = {
+    firstName: '',
+    lastName: '',
+    birthDay: new Date(),
+    city: '',
+    email: '',
+    gender: 'male',
+    hobbies: [],
+  };
 
   constructor(
-    private _fb: FormBuilder,
     private readonly changeDetectorRef: ChangeDetectorRef,
-    private _client: ClientService
+    private _client: ClientService,
+    private _notification: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.clientForm = this._fb.group(
+    this.clientForm = new FormGroup(
       {
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        birthDay: ['', Validators.required],
-        city: ['', Validators.required],
-        gender: ['male'],
-        hobbies: [[]],
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        birthDay: new FormControl('', Validators.required),
+        city: new FormControl('', Validators.required),
+        gender: new FormControl('male', Validators.required),
+        hobbies: new FormControl([], ChipsLengthChecker()),
       },
-      {
-        validators: ChipsLengthChecker('hobbies'),
-      }
+      { updateOn: 'blur' }
     );
   }
 
@@ -48,11 +55,16 @@ export class AddUpdateClientComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    console.log(form.value, form.valid);
+    console.log(form.value, this.clientForm.valid);
     this.client = { ...form.value };
     // console.log(this.client);
-    if (form.valid) {
-      this._client.addClient(this.client);
+    if (this.clientForm.valid) {
+      this._client.addClient(this.client).subscribe((res: any) => {
+        this._notification.showSucess(res.message);
+        this.clientForm.reset();
+      });
+    } else {
+      this._notification.showError('Please fill valid Data');
     }
   }
 }

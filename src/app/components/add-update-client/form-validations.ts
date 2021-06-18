@@ -5,6 +5,7 @@ export const formValidations = {
     { type: 'required', message: 'Email is required' },
     { type: 'email', message: 'Email is not Valid' },
   ],
+  gender: [{ type: 'required', message: 'Gender is required' }],
   birthDay: [{ type: 'required', message: 'Birthdate is required' }],
   city: [{ type: 'required', message: 'City is required' }],
   hobbies: [{ type: 'mustMatch', message: 'At least a hobby needed' }],

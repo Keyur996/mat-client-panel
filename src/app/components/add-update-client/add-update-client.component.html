@@ -13,8 +13,12 @@
         <div>
           <app-other-details [otherDetails]="clientForm"></app-other-details>
           <div>
-            <button mat-flat-button color="primary">Submit</button>
-            <button mat-flat-button>Clear</button>
+            <button mat-flat-button color="primary" type="submit">
+              Submit
+            </button>
+            <button mat-flat-button type="reset" (click)="clientForm.reset()">
+              Clear
+            </button>
           </div>
         </div>
       </div>

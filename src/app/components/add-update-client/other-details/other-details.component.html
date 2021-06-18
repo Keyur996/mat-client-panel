@@ -21,6 +21,11 @@
       <mat-radio-button value="male">Male</mat-radio-button>
       <mat-radio-button value="female">Female</mat-radio-button>
     </mat-radio-group>
+    <mat-error *ngFor="let validation of formValidations.gender">
+      <mat-error *ngIf="handleError('gender', validation.type, otherDetails)">
+        {{ validation.message }}
+      </mat-error>
+    </mat-error>
   </div>
 
   <!-- Hobbies -->

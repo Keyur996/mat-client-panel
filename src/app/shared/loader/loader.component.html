@@ -1,6 +1,6 @@
-<div id="loader-container" *ngIf="isLoading | async" class="loader-overlay">
-  <div class="text-xs-center">
-    <!-- <i class="fas fa-cog fa-spin fa-3x"></i> <span>{{ message }}</span>  -->
-    <mat-spinner class="loader"></mat-spinner>
+<div class="loader__container">
+  <div class="text-center mt-auto" style="position: relative; top: 30vh">
+    <mat-spinner></mat-spinner>
+    <div class="loader__font">Loading...</div>
   </div>
 </div>

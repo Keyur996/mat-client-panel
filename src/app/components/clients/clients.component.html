@@ -27,16 +27,16 @@
     </ng-container>
 
     <!-- Action Column -->
-    <ng-container matColumnDef="action">
+    <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button color="primary">
           <mat-icon>info</mat-icon>
         </button>
-        <button mat-icon-button color="accent">
+        <button mat-icon-button color="accent" >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn">
+        <button mat-icon-button color="warn" (click)="deleteClient(element._id)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

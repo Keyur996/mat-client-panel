@@ -10,7 +10,7 @@ export class NotificationService {
   showSucess(message: string): void {
     // Had an issue with the snackbar being ran outside of angular's zone.
     this.zone.run(() => {
-      this.snackBar.open(message);
+      this.snackBar.open(message, 'close', { panelClass: ['success'] });
     });
   }
 

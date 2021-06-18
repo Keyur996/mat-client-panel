@@ -15,7 +15,7 @@ export class OtherDetailsComponent implements OnInit {
   @Input() otherDetails!: FormGroup;
   handleError: Function = handleError;
   formValidations: any = formValidations;
-  hobbies: string[] = [];
+  myhobbies: string[] = [];
   visible: boolean = true;
   selectable: boolean = true;
   addOnBlur: boolean = true;
@@ -25,7 +25,11 @@ export class OtherDetailsComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    // Add our fruit
+    if (!this.otherDetails.get('hobbies')?.value) {
+      this.otherDetails.patchValue({
+        hobbies: [],
+      });
+    }
     if (value) {
       this.otherDetails.get('hobbies')?.value.push(value);
       this.otherDetails.get('hobbies')?.updateValueAndValidity();

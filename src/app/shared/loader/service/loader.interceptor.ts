@@ -5,34 +5,32 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-  private activeRequests = 0;
   constructor(public loaderService: LoaderService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // first request
-    if (this.activeRequests === 0) {
-      this.showLoader();
-    }
-    // increment each request
-    this.activeRequests++;
+    this.showLoader();
     return next.handle(request).pipe(
-      finalize(() => {
-        // decrement each request
-        this.activeRequests--;
-        // stop when last request
-        if (this.activeRequests === 0) {
+      tap(
+        (event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            this.hideLoader();
+          }
+        },
+        (err: any) => {
+          console.log(err);
           this.hideLoader();
         }
-      })
+      )
     );
   }
 

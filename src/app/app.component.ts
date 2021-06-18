@@ -1,4 +1,11 @@
-import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
+import { LoaderService } from './shared/loader/service/loader.service';
+import {
+  Component,
+  HostListener,
+  ViewChild,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -7,12 +14,23 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  show: boolean = false;
   opened = false;
   @ViewChild('sidenav') public sidenav!: MatSidenav;
 
-  constructor() {}
+  constructor(
+    private _loading: LoaderService,
+    private _ref: ChangeDetectorRef
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('App init');
+    this._loading.isAppLoading.subscribe((show: boolean) => {
+      this.show = show;
+      console.log('show loader', show);
+      this._ref.detectChanges();
+    });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
