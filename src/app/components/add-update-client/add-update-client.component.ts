@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ChipsLengthChecker } from 'src/app/common/customValidators/chipslLengthChecker';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-add-update-client',
@@ -21,7 +22,8 @@ export class AddUpdateClientComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private _client: ClientService
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +43,16 @@ export class AddUpdateClientComponent implements OnInit {
     );
   }
 
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
+  }
+
   onSubmit(form: any) {
     console.log(form.value, form.valid);
     this.client = { ...form.value };
     // console.log(this.client);
-  }
-
-  ngAfterViewChecked(): void {
-    this.changeDetectorRef.detectChanges();
+    if (form.valid) {
+      this._client.addClient(this.client);
+    }
   }
 }

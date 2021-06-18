@@ -1,3 +1,5 @@
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './common/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +13,7 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { AddUpdateClientComponent } from './components/add-update-client/add-update-client.component';
 import { BasicDetailsComponent } from './components/add-update-client/basic-details/basic-details.component';
 import { OtherDetailsComponent } from './components/add-update-client/other-details/other-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,8 +26,11 @@ import { OtherDetailsComponent } from './components/add-update-client/other-deta
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    CoreModule,
     AngularMaterialModule,
+    SharedModule,
+    AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
   ],

@@ -1,1 +1,53 @@
-<h1>Clients</h1>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- Full Name Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name.</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.firstName }} {{ element.lastName }}
+      </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+      <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+    </ng-container>
+
+    <!-- BirthDay Column -->
+    <ng-container matColumnDef="birthDay">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Birth Day</th>
+      <td mat-cell *matCellDef="let element">{{ element.birthDay | date }}</td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary">
+          <mat-icon>info</mat-icon>
+        </button>
+        <button mat-icon-button color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
