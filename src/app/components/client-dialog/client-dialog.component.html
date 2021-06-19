@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Hi, I am {{ data.firstName }} {{ data.lastName }}</h1>
+<mat-dialog-content class="mat-typography">
+  <mat-list>
+    <mat-list-item>
+      <b>First Name: </b> &nbsp; {{ data.firstName }}
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <b>Last Name: </b> &nbsp; {{ data.lastName }}
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item> <b> Email: </b> &nbsp; {{ data.email }} </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item> <b> City: </b> &nbsp; {{ data.city }} </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item> <b> Gender: </b> &nbsp; {{ data.gender }} </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <b> Hobbies: </b> &nbsp; {{ data.hobbies | json }}
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

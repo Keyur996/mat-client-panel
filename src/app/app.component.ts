@@ -24,10 +24,10 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('App init');
+    // console.log('App init');
     this._loading.isAppLoading.subscribe((show: boolean) => {
       this.show = show;
-      console.log('show loader', show);
+      // console.log('show loader', show);
       this._ref.detectChanges();
     });
   }

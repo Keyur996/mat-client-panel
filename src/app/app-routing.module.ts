@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', component: ClientsComponent },
   { path: 'clients', component: ClientsComponent },
   { path: 'add-client', component: AddUpdateClientComponent },
+  { path: 'update-client/:id', component: AddUpdateClientComponent },
 ];
 
 @NgModule({

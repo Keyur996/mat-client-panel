@@ -14,6 +14,8 @@ import { AddUpdateClientComponent } from './components/add-update-client/add-upd
 import { BasicDetailsComponent } from './components/add-update-client/basic-details/basic-details.component';
 import { OtherDetailsComponent } from './components/add-update-client/other-details/other-details.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ClientDialogComponent } from './components/client-dialog/client-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     BasicDetailsComponent,
     OtherDetailsComponent,
     AddUpdateClientComponent,
+    ClientDialogComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

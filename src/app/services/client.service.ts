@@ -15,8 +15,18 @@ export class ClientService {
     return this._http.get<any>('/');
   }
 
+  getClientById(id: string) {
+    return this._http.get<any>(`/clients/${id}`);
+  }
+
   addClient(client: Client) {
     return this._http.post<any>('/', client);
+  }
+
+  updateClient(client: Client) {
+    return this._http.put<any>(`/clients/${client._id}`, client, {
+      headers: this.headers,
+    });
   }
 
   deleteClient(id: string) {

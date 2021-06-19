@@ -10,6 +10,7 @@ import {
 import { ChipsLengthChecker } from 'src/app/common/customValidators/chipslLengthChecker';
 import { ClientService } from 'src/app/services/client.service';
 import { NotificationService } from 'src/app/common/core-services/notification.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-update-client',
@@ -19,20 +20,16 @@ import { NotificationService } from 'src/app/common/core-services/notification.s
 })
 export class AddUpdateClientComponent implements OnInit {
   clientForm!: FormGroup;
-  private client: Client = {
-    firstName: '',
-    lastName: '',
-    birthDay: new Date(),
-    city: '',
-    email: '',
-    gender: 'male',
-    hobbies: [],
-  };
+  private client!: Client;
+  private id: string = '';
+  editMode: boolean = false;
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
     private _client: ClientService,
-    private _notification: NotificationService
+    private _notification: NotificationService,
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,10 +45,26 @@ export class AddUpdateClientComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
+
+    this._route.params.subscribe((param: any) => {
+      if (param.id) {
+        this.getClientById(param.id);
+        this.editMode = true;
+      }
+    });
   }
 
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
+  }
+
+  getClientById(id: string) {
+    this._client.getClientById(id).subscribe((res: any) => {
+      let client: Client = res.data;
+      this.id = client._id!;
+      console.log(client);
+      this.clientForm.patchValue(client);
+    });
   }
 
   onSubmit(form: any) {
@@ -59,10 +72,19 @@ export class AddUpdateClientComponent implements OnInit {
     this.client = { ...form.value };
     // console.log(this.client);
     if (this.clientForm.valid) {
-      this._client.addClient(this.client).subscribe((res: any) => {
-        this._notification.showSucess(res.message);
-        this.clientForm.reset();
-      });
+      if (this.editMode && this.id) {
+        this.client._id = this.id;
+        this._client.updateClient(this.client).subscribe((res: any) => {
+          this._notification.showSucess(res.message);
+        });
+        this._router.navigateByUrl('/clients');
+        this.editMode = false;
+      } else {
+        this._client.addClient(this.client).subscribe((res: any) => {
+          this._notification.showSucess(res.message);
+        });
+      }
+      this.clientForm.reset();
     } else {
       this._notification.showError('Please fill valid Data');
     }
