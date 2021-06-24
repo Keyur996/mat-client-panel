@@ -60,8 +60,8 @@ export class AddUpdateClientComponent implements OnInit {
 
   getClientById(id: string) {
     this._client.getClientById(id).subscribe((res: any) => {
-      let client: Client = res.data;
-      this.id = client._id!;
+      let client: Client = res.body;
+      this.id = client.id!;
       console.log(client);
       this.clientForm.patchValue(client);
     });
@@ -73,7 +73,7 @@ export class AddUpdateClientComponent implements OnInit {
     // console.log(this.client);
     if (this.clientForm.valid) {
       if (this.editMode && this.id) {
-        this.client._id = this.id;
+        this.client.id = this.id;
         this._client.updateClient(this.client).subscribe((res: any) => {
           this._notification.showSucess(res.message);
         });

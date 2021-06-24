@@ -35,7 +35,7 @@
           matTooltip="More Info about client"
           color="primary"
           type="button"
-          (click)="onMoreInfo(element._id)"
+          (click)="onMoreInfo(element.id)"
         >
           <mat-icon>info</mat-icon>
         </button>
@@ -44,7 +44,7 @@
           matTooltip="Edit client"
           color="accent"
           type="button"
-          [routerLink]="['/update-client/', element._id]"
+          [routerLink]="['/update-client/', element.id]"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -52,7 +52,7 @@
           mat-icon-button
           matTooltip="Remove client"
           color="warn"
-          (click)="deleteClient(element._id)"
+          (click)="deleteClient(element.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>

@@ -32,8 +32,8 @@ export class ClientsComponent implements OnInit {
   }
 
   getClients(): void {
-    this._client.getClients().subscribe(({ data, message }) => {
-      this.clients = data;
+    this._client.getClients().subscribe(({ body, message, status }) => {
+      this.clients = body;
       this.dataSource = new MatTableDataSource<Client>(this.clients);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -58,7 +58,7 @@ export class ClientsComponent implements OnInit {
   }
 
   onMoreInfo(id: string) {
-    const client: Client = this.clients.find((client) => client._id === id)!;
+    const client: Client = this.clients.find((client) => client.id === id)!;
     // console.log(id, client, this.clients);
     const dialogRef = this.dialog.open(ClientDialogComponent, {
       data: client,

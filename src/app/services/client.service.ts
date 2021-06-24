@@ -12,24 +12,28 @@ export class ClientService {
   constructor(private _http: HttpClient) {}
 
   getClients() {
-    return this._http.get<any>('/');
+    return this._http.get<any>('/clients');
   }
 
   getClientById(id: string) {
-    return this._http.get<any>(`/clients/${id}`);
+    return this._http.get<any>(`/client/${id}`);
   }
 
   addClient(client: Client) {
-    return this._http.post<any>('/', client);
+    return this._http.post<any>('/client', client);
   }
 
   updateClient(client: Client) {
-    return this._http.put<any>(`/clients/${client._id}`, client, {
-      headers: this.headers,
-    });
+    return this._http.put<{ status: string; message: string; body: Client }>(
+      `/client/${client.id}`,
+      client,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   deleteClient(id: string) {
-    return this._http.delete<any>(`/clients/${id}`, { headers: this.headers });
+    return this._http.delete<any>(`/client/${id}`, { headers: this.headers });
   }
 }
